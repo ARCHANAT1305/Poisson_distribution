@@ -1,3 +1,4 @@
+## DATE:
 # Fitting Poisson  distribution
 # Aim : 
 
@@ -29,10 +30,115 @@ The Poisson distribution is the discrete probability distribution of the number 
 ![image](https://user-images.githubusercontent.com/103921593/230282876-f4a5afbf-cac1-4648-a1b0-c78840638a8e.png)
 
 # Program :
+Developed By :ARCHANA.T
 
- 
+Register No: 212223240013
 
-# Output : 
+import numpy as np
+
+import math
+
+import scipy.stats
+
+L=[int (i) for i in input().split()]
+
+N= len(L);M =max(L)
+
+X=list();f=list()
+
+for i in range(M+1):
+
+    c=0
+
+    for j in range(N):
+
+        if L[j]==i:
+        
+            c=c+1
+            
+    f.append(c)
+    
+    X.append(i)
+    
+sf=np.sum(f)
+
+p=list()
+
+for i in range(M+1):
+
+    p.append(f[i]/sf)
+    
+mean = np.inner(X,p)
+
+p= list();E=list();xi =list()
+
+print("X P (X=x) obs.Fr Exp.Fr xi")
+
+print("--------------------------")
+
+for x in range(M+1):
+    p.append(math.exp(-mean)*mean**x/math.factorial(x))
+    
+    E.append(p[x]*sf)
+    
+    xi.append((f[x]-E[x])**2/E[x])
+    
+    print("%2.2f %2.3f %4.2f %3.2f %3.2f"%(x,p[x],f[x],E[x],xi[x]))
+    
+print("--------------------------")
+
+cal_chi2_sq=np.sum(xi)
+
+print("Calculated value of chi square is %4.2f"%cal_chi2_sq)
+
+table_chi2=scipy.stats.chi2.ppf(1-.01,df =M )
+
+print("Table value of chisquare at 1 level is %4.2f"%table_chi2)
+
+if cal_chi2_sq<table_chi2:
+
+   print("The given data  can be fitted in Poisson Distribution at 1% LOS")
+   
+else: 
+
+   print("The given data cannot be fitted in Poisson Distribution at 1% LOS") 
+
+# Output :
+
+
+5 0 1 4 2 3 7 5 3 5 4 5 6 7 5 5 4 9 
+
+X P (X=x) obs.Fr Exp.Fr xi
+
+--------------------------
+
+0.00 0.012 1.00 0.21 2.94
+
+1.00 0.052 1.00 0.94 0.00
+
+2.00 0.116 1.00 2.09 0.57
+
+3.00 0.172 2.00 3.09 0.39
+
+4.00 0.191 3.00 3.44 0.06
+
+5.00 0.170 6.00 3.05 2.84
+
+6.00 0.126 1.00 2.26 0.70
+
+7.00 0.080 2.00 1.44 0.22
+
+8.00 0.044 0.00 0.80 0.80
+
+9.00 0.022 1.00 0.39 0.93
+
+-------------------------
+
+Calculated value of chi square is 9.45
+
+Table value of chisquare at 1 level is 21.67
+
+The given data  can be fitted in Poisson Distribution at 1% LOS
 
 
 
